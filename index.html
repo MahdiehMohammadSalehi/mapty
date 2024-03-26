@@ -19,10 +19,10 @@
             <p class="logo_name">Mapty</p>
         </div>
 
-        <form class="new_workout "> 
+        <form class="form hidden"> 
             <div class="row" >
                 <label class="label">Type</label>
-                <select class="input">
+                <select class="input input_selector">
                 <option value="running">Running</option>
                 <option value="cycling">Cycling</option>
                 </select>
@@ -33,11 +33,15 @@
             </div>        
             <div class="row">
                 <label class="label">Duration</label>
-                <input class="input" type="text" placeholder="min">
+                <input class="input input_duration" type="text" placeholder="min">
             </div>
             <div class="row">
                 <label class="label">Cadence</label>
-                <input class="input" type="text" placeholder="step/min">          
+                <input class="input input_cadence" type="text" placeholder="step/min">          
+            </div>     
+            <div class="row hidden_row">
+                <label class="label">Elev Gain</label>
+                <input class="input input_elevation" type="text" placeholder="meters">          
             </div>          
         </form>
         
