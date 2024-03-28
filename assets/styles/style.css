@@ -64,5 +64,8 @@ body {
 }
 /* .leaflet-popup  */
 .running-popup .leaflet-popup-content-wrapper {
-  border-left: 5px solid red;
+  border-left: 5px solid rgb(226, 50, 50);
+}
+.cycling-popup .leaflet-popup-content-wrapper {
+  border-left: 5px solid rgb(28, 238, 77);
 }
