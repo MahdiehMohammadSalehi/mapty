@@ -3,6 +3,7 @@
 * {
   box-sizing: border-box;
   font-family: "Poppins", "Courier New", Courier, monospace;
+  list-style-type: none;
 }
 body {
   height: 100%;
@@ -18,21 +19,58 @@ body {
   grid-column: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
   height: 93vh;
   background-color: #2d3439;
 }
-.hidden {
-  opacity: 0;
-}
+
 .logo {
   width: 4.5rem;
   height: 4rem;
   border-radius: 50%;
+  align-self: center;
 }
 .logo_name {
   margin-top: 0;
   color: white;
+  align-self: center;
+}
+.workout_running {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1.4fr 1.2fr;
+  width: 25rem;
+  padding: 0rem 1rem 1rem 1.5rem;
+  background-color: #42484d;
+  border-radius: 0.3rem;
+  margin-bottom: 0.7rem;
+  border-left: 5px solid rgb(226, 50, 50);
+}
+.workout_cycling {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1.4fr 1.2fr;
+  width: 25rem;
+  padding: 0rem 1rem 1rem 1.5rem;
+  background-color: #42484d;
+  border-radius: 0.3rem;
+  margin-bottom: 0.7rem;
+  border-left: 5px solid rgb(28, 238, 77);
+}
+.workout_title {
+  font-size: 1rem;
+  color: antiquewhite;
+  font-weight: 300;
+  grid-column: 1/-1;
+}
+.workout_details {
+  color: antiquewhite;
+  font-size: 0.8rem;
+  font-weight: 200;
+}
+.form.hidden {
+  transform: translateY(-1rem);
+  opacity: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
 }
 .form {
   display: grid;
@@ -41,7 +79,9 @@ body {
   width: 25rem;
   padding: 1rem;
   background-color: #42484d;
-  border-radius: 1rem;
+  border-radius: 0.3rem;
+  margin-bottom: 0.8rem;
+  transition: all 0.5s;
 }
 .row {
   display: flex;
