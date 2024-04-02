@@ -71,16 +71,20 @@ const inputDuration = document.querySelector(".input_duration");
 const inputCadence = document.querySelector(".input_cadence");
 const inputElevation = document.querySelector(".input_elevation");
 const inputSelector = document.querySelector(".input_selector");
+const workoutList = document.querySelector(".workout_list");
 
 class App {
   #map;
   #mapEvent;
-  #workout = [];
+  #workouts = [];
+  #zoom = 14;
 
   constructor() {
     this._getPosition();
     form.addEventListener("keydown", this._newWorkout.bind(this));
     inputSelector.addEventListener("change", this._changeSelector);
+    workoutList.addEventListener("click", this.#mapZoom.bind(this));
+    this._getLocalStorage();
   }
 
   _getPosition() {
@@ -97,13 +101,14 @@ class App {
   _displayMap(position) {
     const { latitude, longitude } = position.coords;
     const coords = [latitude, longitude];
-    this.#map = L.map("map").setView(coords, 14);
+    this.#map = L.map("map").setView(coords, this.#zoom);
 
     L.tileLayer("https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.#map);
 
+    this.#workouts.forEach((work) => this._displayMarker(work));
     this.#map.on("click", this._showForm.bind(this));
   }
 
@@ -159,8 +164,9 @@ class App {
       }
 
       //add new object to workout array
-      this.#workout.push(workout);
+      this.#workouts.push(workout);
       this._displayMarker(workout);
+      this._setLocalStorage();
 
       //display workout
       this._displayWorkout(workout);
@@ -202,7 +208,7 @@ class App {
 
   _displayWorkout(workout) {
     let html = `
-    <li class="workout_${workout.type}" data-id="${workout.id}">
+    <li class="workout workout_${workout.type}" data-id="${workout.id}">
     <h2 class="workout_title">${workout.description}</h2> 
     <div class="workout_details">
         <span class="workout_icon">${
@@ -233,7 +239,7 @@ class App {
 
     if (workout.type === "cycling") {
       html += `
-      <div class="workout_details">
+      <div class="workout workout_details">
       <span class="workout_icon">⚡️</span>
       <span class="workout_value">${workout.speed.toFixed(1)}</span>
       <span class="workout_unit">km/h</span>
@@ -246,6 +252,35 @@ class App {
   </li>`;
     }
     form.insertAdjacentHTML("afterend", html);
+  }
+  #mapZoom(e) {
+    const workoutEl = e.target.closest(".workout");
+    if (!workoutEl) return;
+    const workout = this.#workouts.find(
+      (work) => work.id === workoutEl.dataset.id
+    );
+    // console.log(workout);
+
+    this.#map.setView(workout.coords, this.#zoom, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
+  }
+  _setLocalStorage() {
+    localStorage.setItem("workouts", JSON.stringify(this.#workouts));
+  }
+
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem("workouts"));
+    if (!data) return;
+    this.#workouts = data;
+    this.#workouts.forEach((work) => this._displayWorkout(work));
+  }
+  reset() {
+    localStorage.removeItem("workouts");
+    location.reload();
   }
 }
 

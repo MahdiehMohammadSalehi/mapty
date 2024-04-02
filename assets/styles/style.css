@@ -14,7 +14,7 @@ body {
   display: grid;
   grid-template-columns: 1.5fr 3fr;
 }
-.workout {
+.workouts {
   padding: 1rem;
   grid-column: 1;
   display: flex;
